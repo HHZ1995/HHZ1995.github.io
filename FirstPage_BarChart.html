@@ -1,0 +1,84 @@
+<html>
+<style>
+{
+  font: 16px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+.tooltip {
+            position: absolute;
+            font-size: 12px;
+            width:  auto;
+            height: auto;
+            pointer-events: none;
+      background: white;
+      border: 1px black;
+      color: black;
+        }
+</style>
+<body>
+<div class="jumbotron" style="background-color: gray; color: white" aligncenter>
+    <h1 style="padding-left : 2%">Fuel Efficiency Analysis</h1></div>
+   <p style="padding-left : 2%">Fuel efficiency is one of the most concerns when we buy a car. Here is a brief analysis which may support your decision. </p>
+  
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> rect {fill: orange; stroke: white; }</style>
+<svg width=960 height=600>
+</svg>
+<script>
+var data = [35,34,27,22,18,17,15];
+
+var margin = 50;
+var height = 500;
+
+hs = d3.scaleLinear().domain([12,38]).range([0,height]);
+ws = d3.scaleBand().domain([0,1,2,3,4,5,6]).range([0,height]);
+ys = d3.scaleLinear().domain([12,38]).range([height,0]);
+xs = d3.scaleBand().domain(["2","3","4","6","8","10","12"]).range([0,height]);
+
+d3.select('svg')
+  .append("g")
+  .attr("transform","translate("+margin+","+margin+")")
+  .call(d3.axisLeft(ys)
+          .tickValues([15,20,25,30,35])
+          .tickFormat(d3.format("~s")));
+
+d3.select('svg')
+  .append("g")
+  .attr("transform","translate("+margin+","+(height+margin)+")")
+  .call(d3.axisBottom(xs)
+          .tickValues(["2","3","4","6","8","10","12"])
+          .tickFormat(d3.format("~s")));
+
+d3.select('svg')
+  .append("g")
+  .attr("transform","translate("+margin+","+margin+")")
+  .selectAll('rect')
+  .data(data)
+  .enter()
+  .append('rect')
+  .attr('x',function(d,i){return ws(i);})
+  .attr('y',function(d){return height - hs(d);})
+  .attr('width',ws.bandwidth())
+  .attr('height',function(d){return hs(d);});
+
+</script>  
+
+<div aligncenter>
+  <br><h3>So what does it mean?</h3></br>
+  <p style="padding-left : 2%">A smaller engine generally has a higher combined MPG.</p>
+
+  <p style="padding-left : 2%">People may also interested in the difference between city road performance and highway performance of an engine.</p>
+  <p style="padding-left : 2%"><a href="file:///C:/Users/huanz/Downloads/illinois%20MCSDS/CS%20416%20DV/d3%20project/SecondPage_ScatterPlot.html">CityMPG - HighwayMPG Correlation Analysis</a><br/></p>
+</div>
+</body>
+</html>

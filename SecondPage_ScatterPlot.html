@@ -1,0 +1,95 @@
+<html>
+<style>
+{
+  font: 16px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+.tooltip {
+            position: absolute;
+            font-size: 12px;
+            width:  auto;
+            height: auto;
+            pointer-events: none;
+      background: white;
+      border: 1px black;
+      color: black;
+        }
+</style>
+<body>
+<div class="jumbotron" style="background-color: gray; color: white" aligncenter>
+    <h1 style="padding-left : 2%">Fuel Efficiency Analysis</h1></div>
+   <p style="padding-left : 2%">Fuel efficiency is one of the most concerns when we buy a car. Here is a brief analysis which may support your decision. </p>
+  
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> circle {fill: orange; } </style>
+<body onload='init()'>
+<svg width=960 height=600>
+</svg>
+<script>
+async function init() {
+  const data = await d3.csv("data.csv")
+                       .then(function(csvdata){
+                        var output = new Array();
+                        for(var i=0; i<csvdata.length; i++){
+                          output.push({
+                            C:+csvdata[i].EngineCylinders,
+                            HMPG:+csvdata[i].AverageHighwayMPG,
+                            CMPG:+csvdata[i].AverageCityMPG
+                          });         
+                        }
+                        return output;
+                       })
+
+  var margin = 50;
+  var DOM_size = 500;
+
+  yScaler = d3.scaleLog().domain([10,150]).range([DOM_size,0]);
+  xScaler = d3.scaleLog().domain([10,150]).range([0,DOM_size]);
+
+  d3.select('svg')
+      .append("g")
+      .attr("transform","translate("+margin+","+margin+")")
+      .call(d3.axisLeft(yScaler)
+              .tickValues([10,20,50,100])
+              .tickFormat(d3.format("~s")));
+
+    d3.select('svg')
+      .append("g")
+      .attr("transform","translate("+margin+","+(DOM_size+margin)+")")
+      .call(d3.axisBottom(xScaler)
+              .tickValues([10,20,50,100])
+              .tickFormat(d3.format("~s")));
+
+    d3.select('svg')
+      .append("g")
+      .attr("transform","translate("+margin+","+margin+")")
+      .selectAll('circle')
+      .data(data)
+      .enter()
+      .append('circle')
+      .attr('cx',function(d){return xScaler(d.CMPG);})
+      .attr('cy',function(d){return yScaler(d.HMPG);})
+      .attr('r', 5)
+
+}
+</script>
+
+<div aligncenter>
+  <br><h3>So what does it mean?</h3></br>
+  <p style="padding-left : 2%">A smaller engine generally has a higher combined MPG.</p>
+
+  <p style="padding-left : 2%">People may also interested in the difference between city road performance and highway performance of an engine.</p>
+  <p style="padding-left : 2%"><a href="barchart.html">CityMPG - HighwayMPG Correlation Analysis</a><br/></p>
+</div>
+</body>
+</html>
