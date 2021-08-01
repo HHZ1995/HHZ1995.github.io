@@ -1,0 +1,88 @@
+<html>
+<style>
+{
+  font: 16px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+.tooltip {
+            position: absolute;
+            font-size: 12px;
+            width:  auto;
+            height: auto;
+            pointer-events: none;
+      background: white;
+      border: 1px black;
+      color: black;
+        }
+</style>
+<body>
+<div class="jumbotron" style="background-color: gray; color: white" aligncenter>
+    <h1 style="padding-left : 2%">Fuel Efficiency Analysis</h1></div>
+   <p style="padding-left : 2%">Engine Cylinders: 4</p>
+  
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> rect {fill: orange; stroke: white; }</style>
+<svg width=2000 height=600>
+</svg>
+<script>
+var data = [37.5,34,33.5,33,31,30.5,30.5,30,30,30,30,29.5,29.5,29,28.5,28.5,28.5,28.5,28,27.5,27.5,27.5,27.5,27.5,27,27,26.5,26.5,26.5,26,26,26,26,26,26,26,25.5,25.5,24.5,24.5,24,24,24,23.5,23.5,23.5,22,22];
+
+var margin = 50;
+var height = 500;
+var width = 1500;
+
+hs = d3.scaleLinear().domain([0,40]).range([0,height]);
+ws = d3.scaleBand().domain([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47]).range([0,width]);
+ys = d3.scaleLinear().domain([0,40]).range([height,0]);
+xs = d3.scaleBand().domain(['Lexus','Honda','Toyota','Honda','Mazda','Chevrolet','Hyundai','Acura','Fiat','Kia','Mazda','Chrysler','Nissan','Subaru','Alfa Romeo','MINI','Nissan','Volkswagen','Audi','BMW','Ford','Jeep','Mitsubishi','Volvo','Buick','Cadillac','Audi','Mercedes-Benz','Toyota','Cadillac','Chevrolet','Fiat','Infiniti','Infiniti','Lexus','Lincoln','Jaguar','Volvo','Ram','Volkswagen','Jeep','Porsche','Subaru','Buick','GMC','Land Rover','Dodge','Ford']).range([0,width]);
+
+d3.select('svg')
+  .append("g")
+  .attr("transform","translate("+margin+","+margin+")")
+  .call(d3.axisLeft(ys)
+          .tickValues([0,5,10,15,20,25,30,35,40])
+          .tickFormat(d3.format("~s")));
+
+d3.select('svg')
+  .append("g")
+  .attr("transform","translate("+margin+","+(height+margin)+")")
+  .call(d3.axisBottom(xs));
+          //.tickValues(['Lexus','Honda','Toyota','Honda','Mazda','Chevrolet','Hyundai','Acura','Fiat','Kia','Mazda','Chrysler','Nissan','Subaru','Alfa Romeo','MINI','Nissan','Volkswagen','Audi','BMW','Ford','Jeep','Mitsubishi','Volvo','Buick','Cadillac','Audi','Mercedes-Benz','Toyota','Cadillac','Chevrolet','Fiat','Infiniti','Infiniti','Lexus','Lincoln','Jaguar','Volvo','Ram','Volkswagen','Jeep','Porsche','Subaru','Buick','GMC','Land Rover','Dodge','Ford'])
+          //.tickFormat(d3.format("~s")));
+
+d3.select('svg')
+  .append("g")
+  .attr("transform","translate("+margin+","+margin+")")
+  .selectAll('rect')
+  .data(data)
+  .enter()
+  .append('rect')
+  .attr('x',function(d,i){return ws(i);})
+  .attr('y',function(d){return height - hs(d);})
+  .attr('width',ws.bandwidth())
+  .attr('height',function(d){return hs(d);});
+
+</script>  
+
+<div aligncenter>
+  <br><h3>Feel free to investigate more</h3></br>
+  <p style="padding-left : 2%"><a href="FinalPage_4C.html">Engine Cylinders: 4</a><br/></p>
+  <p style="padding-left : 2%"><a href="FinalPage_6C.html">Engine Cylinders: 6</a><br/></p>
+  <p style="padding-left : 2%"><a href="FinalPage_8C.html">Engine Cylinders: 8</a><br/></p>
+
+  <br><h3>Or go back to previous pages</h3></br>
+  <p style="padding-left : 2%"><a href="FirstPage_BarChart.html">Page 1</a><br/></p>
+  <p style="padding-left : 2%"><a href="SecondPage_ScatterPlot.html">Page 2</a><br/></p>
+</div>
+</body>
+</html>

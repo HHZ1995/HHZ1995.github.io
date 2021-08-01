@@ -28,7 +28,7 @@
 <body>
 <div class="jumbotron" style="background-color: gray; color: white" aligncenter>
     <h1 style="padding-left : 2%">Fuel Efficiency Analysis</h1></div>
-   <p style="padding-left : 2%">Fuel efficiency is one of the most concerns when we buy a car. Here is a brief analysis which may support your decision. </p>
+   <p style="padding-left : 2%">Generally speaking, the engine which performs better on city road will also performs better on highway. </p>
   
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> circle {fill: orange; } </style>
@@ -37,7 +37,7 @@
 </svg>
 <script>
 async function init() {
-  const data = await d3.csv("data.csv")
+  const data = await d3.csv("https://flunky.github.io/cars2017.csv")
                        .then(function(csvdata){
                         var output = new Array();
                         for(var i=0; i<csvdata.length; i++){
@@ -85,11 +85,8 @@ async function init() {
 </script>
 
 <div aligncenter>
-  <br><h3>So what does it mean?</h3></br>
-  <p style="padding-left : 2%">A smaller engine generally has a higher combined MPG.</p>
-
-  <p style="padding-left : 2%">People may also interested in the difference between city road performance and highway performance of an engine.</p>
-  <p style="padding-left : 2%"><a href="barchart.html">CityMPG - HighwayMPG Correlation Analysis</a><br/></p>
+  <br><h3>What is next?</h3></br>
+  <p style="padding-left : 2%">People would like to talk about which company makes the best engine. You may find the answer <a href="FinalPage_4C.html">here</a>. </p></br>
 </div>
 </body>
 </html>
